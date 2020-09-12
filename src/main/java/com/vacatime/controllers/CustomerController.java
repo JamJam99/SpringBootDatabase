@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CustomerController {
+    
+    @Autowired
     CustomerRepository customerRepository;
 
-    @Autowired
     CustomerController(CustomerRepository customerRepository){
         this.customerRepository = customerRepository;
     }
