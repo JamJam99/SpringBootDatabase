@@ -1,23 +1,35 @@
 package com.vacatime.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "idcustomer")
+@Table(name = "customer")
 public class Customer {
-    @Id @GeneratedValue
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+
+    @Column(name = "username")
+    private String userName;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
 
-    public Customer() {}
+    public Customer() {
+        super();
+    }
 
-    Customer(String username, String email, String password) {
-        this.username = username;
+    Customer(String userName, String email, String password) {
+        super();
+        this.userName = userName;
         this.email = email;
         this.password = password;
     }
@@ -31,11 +43,11 @@ public class Customer {
     }
 
     public String getUserName() {
-        return username;
+        return userName;
     }
 
-    public void setUserName(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -56,12 +68,12 @@ public class Customer {
     @Override
     public String toString(){
         return  "Customer{" + "id=" + id 
-                + ", username='" + username + '\''
+                + ", username='" + userName + '\''
                 + ", email=' " + email + '\''  
                 + ", password=' "+ password + '\'' 
                 + '}';
 
     
     }
-    
+
 }

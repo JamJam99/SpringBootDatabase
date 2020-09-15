@@ -15,24 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
     
     @Autowired
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
-    CustomerController(CustomerRepository customerRepository){
-        this.customerRepository = customerRepository;
-    }
 
     @GetMapping("/")
     public String getHello() {
         return "Hello";
     }
     @GetMapping("/customers")
-    List<Customer> all() {
+    public List<Customer> all() {
         return customerRepository.findAll();
     }
 
     @PostMapping("/customers")
-    Customer newCustomer(@RequestBody Customer newCustomer) {
-        return customerRepository.save(newCustomer);
+    public Customer newCustomer(@RequestBody Customer newCustomer) {
+        return this.customerRepository.save(newCustomer);          
     }
 
     @GetMapping("/customers/{id}")
