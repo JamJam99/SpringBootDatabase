@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "Destination")
+@Table(name = "destination")
 
 public class Destination {
 
@@ -16,4 +16,36 @@ public class Destination {
 
     @Column (name= "cityname")
     private String cityName;
+
+    public Destination() {
+        super();
+    }
+
+    Destination (String cityName) {
+        super();
+        this.cityName = cityName;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    @Override
+    public String toString() {
+        return "Destination{" + "id=" + id
+        + ", cityname='" + cityName + '\''
+        + '}'; 
+    }
 };
