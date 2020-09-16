@@ -14,7 +14,7 @@ public class Description {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name= "descripstion")
+    @Column(name= "description")
     private String description;
 
     @Column(name= "itineraries")
@@ -65,5 +65,15 @@ public class Description {
 
     public void setFacilities(String facilities) {
 		this.facilities = facilities;
+    }
+
+    @Override
+    public String toString(){
+        return "Description{" + "id=" + id
+                + ", description='" + description + '\''
+                + ", itineraries=' " + itineraries + '\'' 
+                + ", facilities=' " + facilities +'\''
+                + '}';
+
     }
 }
