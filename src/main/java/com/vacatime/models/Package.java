@@ -2,9 +2,13 @@ package com.vacatime.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +16,7 @@ import javax.persistence.Table;
 public class Package {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column (name= "package_code")
@@ -20,17 +25,22 @@ public class Package {
     @Column(name= "price")
     private String price;
 
-    @Column (name= "destination_id")
-    private int destinationId;
+    
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn (foreignKey = @ForeignKey( name= "destination_id"),referencedColumnName = "id", insertable = false)
+    private String destinationId;
 
-    @Column (name= "description_id")
-    private int descriptionId;
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn (foreignKey = @ForeignKey(name= "description_id"),referencedColumnName = "id", insertable = false)
+    private String descriptionId;
+ 
+
 
     public Package() {
         super();
     }
 
-    Package(String packagecode, String price, int destinationId, int descriptionId){
+    Package(String packagecode, String price, String destinationId, String descriptionId){
         super();
         this.packageCode = packagecode;
         this.price = price;
@@ -54,19 +64,19 @@ public class Package {
         this.price = price;
     }
 
-    public int getDestinationId() {
+    public String getDestinationId() {
         return destinationId;
     }
 
-    public void setDestinationId(int destinationId) {
+    public void setDestinationId(String destinationId) {
         this.destinationId = destinationId;
     }
 
-    public int getDescriptionId() {
+    public String getDescriptionId() {
         return descriptionId;
     }
 
-    public void setDescriptionId(int descriptionId) {
+    public void setDescriptionId(String descriptionId) {
         this.descriptionId = descriptionId;
     }
 

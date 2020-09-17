@@ -1,10 +1,15 @@
 package com.vacatime.models;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +17,7 @@ import javax.persistence.Table;
 public class Description {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name= "id")
     private Long id;
 
     @Column(name= "description")
@@ -23,15 +29,19 @@ public class Description {
     @Column(name= "facilities")
     private String facilities;
 
+    @OneToOne (mappedBy = "description", targetEntity = Package.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Package> packages;
+
     public Description() {
         super() ;
     }
 
-    Description(String description, String itineraries, String facilities){
+    Description(String description, String itineraries, String facilities, Set<Package> packages){
         super();
         this.description = description;
         this.itineraries = itineraries;
         this.facilities = facilities;
+        this.packages = packages;
 
     };
 
@@ -66,6 +76,14 @@ public class Description {
     public void setFacilities(String facilities) {
 		this.facilities = facilities;
     }
+    
+    public Set<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<Package> packages) {
+        this.packages = packages;
+    }
 
     @Override
     public String toString(){
@@ -76,4 +94,5 @@ public class Description {
                 + '}';
 
     }
+
 }
