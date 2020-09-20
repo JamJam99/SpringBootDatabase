@@ -4,29 +4,28 @@ package com.vacatime.controllers;
 import java.util.List;
 
 import com.vacatime.models.Destination;
-import com.vacatime.repositories.DestinationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.vacatime.services.DestinationService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/destinations")
 public class DestinationController {
-    @Autowired
-    private DestinationRepository destinationRepository;
 
+    private final DestinationService destinationService;
 
-    @GetMapping("/destinations")
-    public List<Destination> all() {
-        return destinationRepository.findAll();
+    public DestinationController(DestinationService destinationService) {
+        this.destinationService = destinationService;
+    }
+
+    @GetMapping
+    public List<Destination> findAllDestinations() {
+        return destinationService.findAll();
     }
 
 
-    @GetMapping("/destinations/{id}")
-    public Destination getDestinationById(@PathVariable("id") Long id) {
-        Destination destination = destinationRepository.getOne(id);
-        System.out.println(destination);
-        return destination;
+    @GetMapping("{id}")
+    public Destination findDestinationById(@PathVariable("id") Long id) {
+        return destinationService.findDestinationById(id);
     }
     
 }

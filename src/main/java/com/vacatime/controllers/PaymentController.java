@@ -3,27 +3,30 @@ package com.vacatime.controllers;
 import java.util.List;
 
 import com.vacatime.models.Payment;
-import com.vacatime.repositories.PaymentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vacatime.services.PaymentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/payment")
 public class PaymentController {
-    @Autowired
-    private PaymentRepository paymentRepository;
 
-    @GetMapping("/payment")
-    public List<Payment> all() {
-        return paymentRepository.findAll();
+    private final PaymentService paymentService;
+
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
-    @GetMapping("/payment/{id}")
-    public Payment getPaymentById(@PathVariable("id")Long id){
-        Payment payment = paymentRepository.getOne(id);
-        System.out.println(payment);
-        return payment;
+    @GetMapping
+    public List<Payment> findAllPayments() {
+        return paymentService.findAll();
+    }
+
+    @GetMapping("{id}")
+    public Payment findPaymentById(@PathVariable("id")Long id){
+        return paymentService.findById(id);
     }
     
 }

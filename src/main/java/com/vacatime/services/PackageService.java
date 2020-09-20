@@ -1,23 +1,29 @@
 
 package com.vacatime.services;
 
+import com.vacatime.exception.ResourceNotFoundException;
 import com.vacatime.models.Package;
 import com.vacatime.repositories.PackageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PackageService {
-    private PackageRepository packageRepository;
 
-    @Autowired
-    public PackageService(PackageRepository packageRepository){
+    private final PackageRepository packageRepository;
+
+    public PackageService(PackageRepository packageRepository) {
         this.packageRepository = packageRepository;
     }
 
-    public Package getPackage(Long id){
-        return packageRepository.getOne(id);
+    public List<Package> findAll() {
+        return packageRepository.findAll();
     }
-    
+
+    public Package findById(Long id) {
+        return packageRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
 }

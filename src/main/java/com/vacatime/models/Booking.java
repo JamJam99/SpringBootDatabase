@@ -1,64 +1,33 @@
 package com.vacatime.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+@Data
+@NoArgsConstructor
 @Entity
-@Table(name= "booking")
+@Table(name = "booking")
 public class Booking {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name= "booking")
-    private String booking;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Package aPackage;
 
-    @Column(name= "customer_id")
-    private int customerid;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
-    @Column(name =  "package_id")
-    private int packageid;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
-    public Booking() {
-        super() ;
-    }
-
-    Booking(String booking, int customerid, int packageid){
-        super();
-        this.booking = booking;
-        this.customerid = customerid;
-        this.packageid = packageid;
-    }     
-
-
-    public String getBooking() {
-        return booking;
-    }
-
-    public void setBooking(String booking) {
-        this.booking = booking;
-    }
-
-    public int getCustomerid() {
-        return customerid;
-    }
-
-    public void setCustomerid(int customerid) {
-        this.customerid = customerid;
-    }
-
-    public int getPackageid() {
-        return packageid;
-    }
-
-    public void setPackageid(int packageid) {
-		this.packageid = packageid;
-    }
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Payment payment;
 }

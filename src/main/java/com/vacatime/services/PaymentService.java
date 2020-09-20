@@ -6,16 +6,22 @@ import com.vacatime.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PaymentService {
-    private PaymentRepository paymentRepository;
 
-    @Autowired
-    public PaymentService(PaymentRepository paymentRepository){
+    private final PaymentRepository paymentRepository;
+
+    public PaymentService(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
 
-    public Payment getPayment(long id){
-        return paymentRepository.getOne(id);
+    public List<Payment> findAll() {
+        return paymentRepository.findAll();
+    }
+
+    public Payment findById(Long id) {
+        return paymentRepository.findById(id).orElse(null);
     }
 }

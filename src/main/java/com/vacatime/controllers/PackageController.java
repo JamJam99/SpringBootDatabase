@@ -1,32 +1,32 @@
 package com.vacatime.controllers;
 
-import com.vacatime.repositories.PackageRepository;
+import com.vacatime.models.Package;
+import com.vacatime.services.PackageService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.vacatime.models.Package;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
 @RestController
+@RequestMapping("/package")
 public class PackageController {
 
-    @Autowired
-    private PackageRepository packageRepository;
+    private final PackageService packageService;
 
-    @GetMapping("/package")
-    public List<Package> all(){
-        return packageRepository.findAll();
+    public PackageController(PackageService packageService) {
+        this.packageService = packageService;
     }
 
-    @GetMapping("/package/{id}")
-    public Package getPackageById(@PathVariable("id")Long id){
-        Package packagecode = packageRepository.getOne(id);
-        System.out.println(packagecode);
-        return packagecode;
+    @GetMapping
+    public List<Package> findAllPackages() {
+        return packageService.findAll();
     }
 
-    
+    @GetMapping("{id}")
+    public Package findPackageById(@PathVariable("id") Long id) {
+        return packageService.findById(id);
+    }
+
 }
